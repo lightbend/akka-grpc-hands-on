@@ -36,7 +36,8 @@ class GreeterServer(system: ActorSystem) {
     implicit val mat: Materializer = ActorMaterializer()
     implicit val ec: ExecutionContext = sys.dispatcher
 
-    val service: HttpRequest => Future[HttpResponse] = ???
+    val service: HttpRequest => Future[HttpResponse] = 
+      GreeterServiceHandler(new GreeterServiceImpl(mat))
       
 
     val bound = Http().bindAndHandleAsync(

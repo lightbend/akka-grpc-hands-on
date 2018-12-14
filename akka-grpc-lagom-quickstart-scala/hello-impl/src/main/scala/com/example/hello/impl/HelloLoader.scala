@@ -28,5 +28,6 @@ abstract class HelloApplication(context: LagomApplicationContext)
   // Bind the service that this server provides
   override lazy val lagomServer =
     serverFor[HelloService](wire[HelloServiceImpl])
+      .additionalRouter(wire[HelloWorldRouter])
 
 }
