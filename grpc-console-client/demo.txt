@@ -1,0 +1,32 @@
+sbt
+console
+
+:load client-script.sc
+
+
+//----------------------------------------------------------------------------------
+// simple request / response
+val helloReply = client.sayHello(HelloRequest("John"))
+
+
+//----------------------------------------------------------------------------------
+val hellos = List("Ana", "Paul", "Claire", "Joe").map(HelloRequest.apply)
+val hellosSrc = Source(hellos)
+
+// send a source and receive a Future with Hellos for each element in source
+val srcClientStreaming = client.itKeepsTalking(hellosSrc)
+
+
+//----------------------------------------------------------------------------------
+// send a string and receive a Source with "Hello, John" chars
+val serverSrc = client.itKeepsReplying(HelloRequest("John"))
+serverSrc.runForeach(reply => println(s"got streaming reply: ${reply.message}"))
+
+
+//----------------------------------------------------------------------------------
+val hellos = List("Ana", "Paul", "Claire", "Joe").map(HelloRequest.apply)
+val hellosSrc = Source(hellos)
+
+// send a source and receive a Source of Hellos for each element in source
+val bidirSrc = client.streamHellos(hellosSrc)
+bidirSrc.runForeach(reply => println(s"got streaming reply: ${reply.message}"))
