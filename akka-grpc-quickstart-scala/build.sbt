@@ -4,8 +4,8 @@ version := "1.0"
 
 scalaVersion := "2.12.6"
 
-lazy val akkaVersion = "2.5.19"
-lazy val akkaGrpcVersion = "0.4.2"
+lazy val akkaVersion = "2.5.21"
+lazy val akkaGrpcVersion = "0.5.0"
 
 enablePlugins(AkkaGrpcPlugin)
 
